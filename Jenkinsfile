@@ -36,7 +36,7 @@ pipeline {
         stage('Deploy to Vercel') {
             steps {
                 withCredentials([string(credentialsId: 'VERCEL_TOKEN', variable: 'MY_VERCEL_TOKEN')]) {
-                    bat 'npx vercel --prod --token %MY_VERCEL_TOKEN%'
+                    bat 'npx vercel --prod --token %MY_VERCEL_TOKEN% --yes'
                 //bat 'vercel deploy --prod --token %VERCEL_TOKEN%'
                 }
             }
