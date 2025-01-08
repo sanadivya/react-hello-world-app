@@ -6,12 +6,12 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the repository
-                checkout scm
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         // Checkout the repository
+        //         checkout scm
+        //     }
+        // }
 
         stage('Install Dependencies') {
             steps {
@@ -27,12 +27,12 @@ pipeline {
             }
         }
 
-        // stage('Test') {
-        //     steps {
-        //         // Run unit tests
-        //         bat 'npm test -- --watchAll=false'
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                // Run unit tests
+                bat 'npm test -- --watchAll=false'
+            }
+        }
     }
 
     post {
