@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Git branch to build')
+
+    }
+
     tools {
         nodejs 'NODEJS' // Name of the Node.js configuration in Jenkins
     }
@@ -46,9 +51,15 @@ pipeline {
     post {
         success {
             echo 'Build and test successful!'
+            mail to: 'sanadivya06@gmail.com'
+            subject: 'Build succeded'
+            body: 'Good job!'
         }
         failure {
             echo 'Build or test failed!'
+            mail to: 'sanadivya06@gmail.com'
+            subject: 'Build failed'
+            body: 'Something went wrong'
         }
         always {
             // Clean workspace after the pipeline run
