@@ -54,10 +54,16 @@ pipeline {
             emailext(
                 to: 'sanadivya06@gmail.com',
                 subject: "Jenkins Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER} Success",
-                body: """<p>Good news! The Jenkins build was successful.</p>
-                        <p>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</p>
-                        <p><a href="${env.BUILD_URL}">Click here to view the build details.</a></p>""",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                body: """
+                <html>
+                <body>
+                <h2>Good news! The Jenkins build was successful.</h2>
+                        <h4>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</h4>
+                        <h4><a href="${env.BUILD_URL}">Click here to view the build details.</a></h4>
+                </body>
+                </html>
+                """,
+                //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
         failure {
@@ -65,9 +71,15 @@ pipeline {
             emailext(
                 to: 'sanadivya06@gmail.com',
                 subject: "Jenkins Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER} Failed",
-                body: """<p>Unfortunately, the Jenkins build has failed.</p>
-                        <p>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</p>
-                        <p><a href="${env.BUILD_URL}">Click here to view the build details.</a></p>"""
+                body: """
+                <html>
+                <body>
+                <h2>Unfortunately, the Jenkins build has failed.</h2>
+                        <h4>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</h4>
+                        <h4><a href="${env.BUILD_URL}">Click here to view the build details.</a></h4>
+                </body>
+                </html>
+                """
             )
         }
         always {
