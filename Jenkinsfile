@@ -63,6 +63,7 @@ pipeline {
                 </body>
                 </html>
                 """,
+                to: '$DEFAULT_RECIPIENTS'
                 //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
@@ -79,7 +80,8 @@ pipeline {
                         <h4><a href="${env.BUILD_URL}">Click here to view the build details.</a></h4>
                 </body>
                 </html>
-                """
+                """,
+                to: '$DEFAULT_RECIPIENTS'
             )
         }
         always {
