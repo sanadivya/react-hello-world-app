@@ -11,6 +11,24 @@ pipeline {
     }
 
     stages {
+        
+        // stage('Check Emails') {
+        //     steps {
+        //         script {
+        //             // Replace with your logic to read emails
+        //             def emailContent = readEmail()
+
+        //             if (emailContent.contains('BUILD:')) {
+        //                 def jobName = emailContent.split('BUILD:')[1].trim()
+        //                 echo "Triggering job: ${jobName}"
+        //                 build job: jobName
+        //             } else {
+        //                 echo "No build commands found in emails."
+        //             }
+        //         }
+        //     }
+        // }
+
         stage('Install Dependencies') {
             steps {
                 // Install npm dependencies
@@ -63,7 +81,8 @@ pipeline {
                 </body>
                 </html>
                 """,
-                to: '$DEFAULT_RECIPIENTS'
+                to: '$DEFAULT_RECIPIENTS',
+                attachLog: true
                 //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
@@ -81,7 +100,8 @@ pipeline {
                 </body>
                 </html>
                 """,
-                to: '$DEFAULT_RECIPIENTS'
+                to: '$DEFAULT_RECIPIENTS',
+                attachLog: true
             )
         }
         always {
