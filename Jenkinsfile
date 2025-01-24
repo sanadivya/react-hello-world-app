@@ -80,8 +80,8 @@ pipeline {
                 //     bat 'docker login -u %DOCKER_USERNAME% -P %DOCKER_PASSWORD%'
                 //     bat 'docker push %DOCKER_USERNAME%/react-hello-world-app'
                 bat 'docker build -t react-hello-world-app .'
-                bat "docker tag react-hello-world-app ${DOCKER_CREDENTIALS_USERNAME}/react-hello-world-app"
-                bat "docker push ${DOCKER_USERNAME}/react-hello-world-app"
+                bat "docker tag react-hello-world-app ${DOCKER_CREDENTIALS_USR}/react-hello-world-app"
+                bat "docker push ${DOCKER_CREDENTIALS_USR}/react-hello-world-app"
             }
         }
     }
