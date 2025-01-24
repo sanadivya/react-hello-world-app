@@ -5,10 +5,6 @@ pipeline {
         string(name: 'BRANCH', defaultValue: 'master', description: 'Git branch to build')
     }
 
-    environment {
-        DOCKER_CREDENTIALS = credentials('DOCKER_HUB')
-    }
-
     tools {
         nodejs 'NODEJS' // Name of the Node.js configuration in Jenkins
     }
@@ -76,12 +72,11 @@ pipeline {
 
         stage('Push images to DockerHub'){
             steps{
-                // withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                //     bat 'docker login -u %DOCKER_USERNAME% -P %DOCKER_PASSWORD%'
-                //     bat 'docker push %DOCKER_USERNAME%/react-hello-world-app'
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                 bat 'docker build -t react-hello-world-app .'
-                bat "docker tag react-hello-world-app ${DOCKER_CREDENTIALS_USR}/react-hello-world-app"
-                bat "docker push ${DOCKER_CREDENTIALS_USR}/react-hello-world-app"
+                bat "docker tag react-hello-world-app %DOCKER_USERNAME%/react-hello-world-app"
+                bat "echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin" // Login to Docker Hub
+                bat "docker push %DOCKER_USERNAME%/react-hello-world-app"
             }
         }
     }
