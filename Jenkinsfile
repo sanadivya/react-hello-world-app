@@ -77,6 +77,7 @@ pipeline {
                 bat "docker tag react-hello-world-app %DOCKER_USERNAME%/react-hello-world-app"
                 bat "echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin" // Login to Docker Hub
                 bat "docker push %DOCKER_USERNAME%/react-hello-world-app"
+                }
             }
         }
     }
