@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_CREDENTIALS = credentials(id: 'DOCKER_HUB')
+        DOCKER_CREDENTIALS = credentials('DOCKER_HUB')
     }
 
     tools {
