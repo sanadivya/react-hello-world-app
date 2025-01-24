@@ -6,6 +6,10 @@ pipeline {
 
     }
 
+    environment {
+        DOCKER_CREDENTIALS = credentials(id: 'DOCKER_HUB')
+    }
+
     tools {
         nodejs 'NODEJS' // Name of the Node.js configuration in Jenkins
     }
@@ -61,6 +65,24 @@ pipeline {
                 withCredentials([string(credentialsId: 'VERCEL_TOKEN', variable: 'MY_VERCEL_TOKEN')]) {
                     bat 'npx vercel --prod --token %MY_VERCEL_TOKEN% --yes --name react-hello-world-app'
                 //bat 'vercel deploy --prod --token %VERCEL_TOKEN%'
+                }
+            }
+        }
+
+        stage('Build Images'){
+            steps{
+                bat 'docker build -t react-hello-world-app .'
+            }
+        }
+
+        stage('Push images to DockerHub'){
+            steps{
+                // withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                //     bat 'docker login -u %DOCKER_USERNAME% -P %DOCKER_PASSWORD%'
+                //     bat 'docker push %DOCKER_USERNAME%/react-hello-world-app'
+                bat 'docker build -t react-hello-world-app .'
+                bat 'docker tag react-hello-world-app ${DOCKER_CREDENTIALS_USERNAME}/react-hello-world-app'
+                bat 'docker push ${DOCKER_USERNAME}/react-hello-world-app'
                 }
             }
         }
