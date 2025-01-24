@@ -1,7 +1,7 @@
 # React Hello World App
 [**Try it out here!!**](http://react-hello-world-app.surge.sh/ "http://react-hello-world-app.surge.sh/")
 
-------
+---------
 
 My first React app.
 Using [create-react-app](https://github.com/facebook/create-react-app) and [surge.sh](https://surge.sh/)
