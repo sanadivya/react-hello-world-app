@@ -3,7 +3,6 @@ pipeline {
 
     parameters {
         string(name: 'BRANCH', defaultValue: 'master', description: 'Git branch to build')
-
     }
 
     environment {
@@ -83,52 +82,53 @@ pipeline {
                 bat 'docker build -t react-hello-world-app .'
                 bat 'docker tag react-hello-world-app ${DOCKER_CREDENTIALS_USERNAME}/react-hello-world-app'
                 bat 'docker push ${DOCKER_USERNAME}/react-hello-world-app'
-                }
             }
         }
     }
+}
 
-    post {
-        success {
-            echo 'Build and test successful!'
-            emailext(
-                //to: 'sanadivya06@gmail.com',
-                subject: "Jenkins Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER} Success",
-                body: """
-                <html>
-                <body>
-                <h2>Good news! The Jenkins build was successful.</h2>
-                        <h4>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</h4>
-                        <h4><a href="${env.BUILD_URL}">Click here to view the build details.</a></h4>
-                </body>
-                </html>
-                """,
-                to: '$DEFAULT_RECIPIENTS',
-                attachLog: true
-                //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-            )
-        }
-        failure {
-            echo 'Build or test failed!'
-            emailext(
-                //to: 'sanadivya06@gmail.com',
-                subject: "Jenkins Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER} Failed",
-                body: """
-                <html>
-                <body>
-                <h2>Unfortunately, the Jenkins build has failed.</h2>
-                        <h4>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</h4>
-                        <h4><a href="${env.BUILD_URL}">Click here to view the build details.</a></h4>
-                </body>
-                </html>
-                """,
-                to: '$DEFAULT_RECIPIENTS',
-                attachLog: true
-            )
-        }
-        always {
-            // Clean workspace after the pipeline run
-            cleanWs()
-        }
+post {
+    success {
+        echo 'Build and test successful!'
+        emailext(
+            //to: 'sanadivya06@gmail.com',
+            subject: "Jenkins Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER} Success",
+            body: """
+            <html>
+            <body>
+            <h2>Good news! The Jenkins build was successful.</h2>
+                    <h4>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</h4>
+                    <h4><a href="${env.BUILD_URL}">Click here to view the build details.</a></h4>
+            </body>
+            </html>
+            """,
+            to: '$DEFAULT_RECIPIENTS',
+            attachLog: true
+            //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+        )
+    }
+    failure {
+        echo 'Build or test failed!'
+        emailext(
+            //to: 'sanadivya06@gmail.com',
+            subject: "Jenkins Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER} Failed",
+            body: """
+            <html>
+            <body>
+            <h2>Unfortunately, the Jenkins build has failed.</h2>
+                    <h4>Job: ${env.JOB_NAME}<br>Build: #${env.BUILD_NUMBER}</h4>
+                    <h4><a href="${env.BUILD_URL}">Click here to view the build details.</a></h4>
+            </body>
+            </html>
+            """,
+            to: '$DEFAULT_RECIPIENTS',
+            attachLog: true
+        )
+    }
+    always {
+        // Clean workspace after the pipeline run
+        cleanWs()
     }
 }
+    
+
