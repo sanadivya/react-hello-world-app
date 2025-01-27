@@ -10,23 +10,6 @@ pipeline {
     }
 
     stages {
-        
-        // stage('Check Emails') {
-        //     steps {
-        //         script {
-        //             // Replace with your logic to read emails
-        //             def emailContent = readEmail()
-
-        //             if (emailContent.contains('BUILD:')) {
-        //                 def jobName = emailContent.split('BUILD:')[1].trim()
-        //                 echo "Triggering job: ${jobName}"
-        //                 build job: jobName
-        //             } else {
-        //                 echo "No build commands found in emails."
-        //             }
-        //         }
-        //     }
-        // }
 
         stage('Install Dependencies') {
             steps {
@@ -49,6 +32,12 @@ pipeline {
             }
         }
 
+        stage('Archive Build'){
+            steps{
+                archiveArtifacts artifacts: 'build', followSymlinks: false
+            }
+        }
+
         stage('Install Vercel CLI') {
             steps {
                 bat 'npm install -g vercel' // Installs Vercel CLI
@@ -64,22 +53,22 @@ pipeline {
             }
         }
 
-        stage('Build Images'){
-            steps{
-                bat 'docker build -t react-hello-world-app .'
-            }
-        }
+        // stage('Build Images'){
+        //     steps{
+        //         bat 'docker build -t react-hello-world-app .'
+        //     }
+        // }
 
-        stage('Push images to DockerHub'){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                bat 'docker build -t react-hello-world-app .'
-                bat "docker tag react-hello-world-app %DOCKER_USERNAME%/react-hello-world-app"
-                bat "echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin" // Login to Docker Hub
-                bat "docker push %DOCKER_USERNAME%/react-hello-world-app"
-                }
-            }
-        }
+        // stage('Push images to DockerHub'){
+        //     steps{
+        //         withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+        //         bat 'docker build -t react-hello-world-app .'
+        //     //    bat "docker tag react-hello-world-app %DOCKER_USERNAME%/react-hello-world-app"
+        //     //    bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%" // Login to Docker Hub
+        //     //    bat "docker push %DOCKER_USERNAME%/react-hello-world-app"
+        //         }
+        //     }
+        // }
     }
 }
 
