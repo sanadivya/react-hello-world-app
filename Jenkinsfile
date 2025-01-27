@@ -59,16 +59,16 @@ pipeline {
         //     }
         // }
 
-        // stage('Push images to DockerHub'){
-        //     steps{
-        //         withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-        //         bat 'docker build -t react-hello-world-app .'
-        //     //    bat "docker tag react-hello-world-app %DOCKER_USERNAME%/react-hello-world-app"
-        //     //    bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%" // Login to Docker Hub
-        //     //    bat "docker push %DOCKER_USERNAME%/react-hello-world-app"
-        //         }
-        //     }
-        // }
+        stage('Push images to DockerHub'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                bat 'docker build -t react-hello-world-app .'
+                bat "docker tag react-hello-world-app %DOCKER_USERNAME%/react-hello-world-app"
+                bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%" // Login to Docker Hub
+                bat "docker push %DOCKER_USERNAME%/react-hello-world-app"
+                }
+            }
+        }
     }
     post {
     success {
