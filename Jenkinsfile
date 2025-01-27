@@ -52,7 +52,7 @@ pipeline {
                 }
             }
         }
-        
+
         // stage('Build Images'){
         //     steps{
         //         bat 'docker build -t react-hello-world-app .'
@@ -70,9 +70,7 @@ pipeline {
         //     }
         // }
     }
-}
-
-post {
+    post {
     success {
         echo 'Build and test successful!'
         emailext(
@@ -115,5 +113,5 @@ post {
         cleanWs()
     }
 }
-    
+}
 
