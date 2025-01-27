@@ -52,7 +52,7 @@ pipeline {
                 }
             }
         }
-
+        
         // stage('Build Images'){
         //     steps{
         //         bat 'docker build -t react-hello-world-app .'
