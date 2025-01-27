@@ -34,7 +34,7 @@ pipeline {
 
         stage('Archive Build'){
             steps{
-                archiveArtifacts artifacts: 'build', followSymlinks: false
+                archiveArtifacts artifacts: 'build/**', followSymlinks: false
             }
         }
 
