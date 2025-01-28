@@ -48,16 +48,9 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'VERCEL_TOKEN', variable: 'MY_VERCEL_TOKEN')]) {
                     bat 'npx vercel --prod --token %MY_VERCEL_TOKEN% --yes --name react-hello-world-app'
-                //bat 'vercel deploy --prod --token %VERCEL_TOKEN%'
                 }
             }
         }
-
-        // stage('Build Images'){
-        //     steps{
-        //         bat 'docker build -t react-hello-world-app .'
-        //     }
-        // }
 
         stage('Push images to DockerHub'){
             steps{
