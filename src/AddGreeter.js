@@ -25,6 +25,7 @@ class AddGreeter extends Component {
                 />
                 &nbsp;&nbsp;
                 <button onClick={this.addGreeting}>Add</button>
+                <button onClick={this.addGreeting}>Add</button>
             </div>
         );
     }
