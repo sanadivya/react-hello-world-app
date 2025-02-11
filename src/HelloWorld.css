@@ -1,7 +1,7 @@
 .HelloWorld {
     border: 6px solid black;
     text-align: center;
-    background: #d1add6;
+    background: #92c2f6;
     color: #333;
     margin: 20px;
     padding: 20px;
@@ -10,6 +10,6 @@
   button {
     margin: 5px;
     padding: 5px;
-    border: 1px solid gray;
+    border: 1px solid rgb(6, 43, 130);
     border-radius: 5px;
   }
